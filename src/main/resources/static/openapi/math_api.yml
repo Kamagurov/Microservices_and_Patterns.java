@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Сложение, Вычитание, Умножение
+  version: 0.0.1
+servers:
+  - url: https://localhost:8080
+    description: Development server
+paths:
+  /create:
+    get:
+      summary: Метод создания модели
+      tags:
+        - create
+      operationId: createModel
+      responses:
+        '200':
+          description: Успешный ответ по созданию модели
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+        '500':
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+  /calc:
+    post:
+      summary: Запрос json на вычисление
+      tags:
+        - calculate
+      operationId: getCalc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MathModel"
+      responses:
+        '200':
+          description: Успешный ответ по созданию модели
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+        '500':
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+  /message:
+    post:
+      summary: Проверка имени, фамилии, номера телефона
+      tags:
+        - userData
+      operationId: process
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailModel"
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailModel"
+        '500':
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailModel"
+  /test:
+    post:
+      summary: Взаимодействие микросервисов
+      tags:
+        - RequestToMathCalculation
+      operationId: requestCalc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MathModel"
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+        '500':
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathModel"
+
+
+components:
+  schemas:
+    MathModel:
+      type: object
+      required:
+        - digitOne
+        - digitTwo
+        - action
+      properties:
+        digitOne:
+          type: integer
+          example: Some digit
+        digitTwo:
+          type: integer
+          example: Some digit
+        action:
+          type: string
+    EmailModel:
+      type: object
+      required:
+        - name
+        - surname
+        - phoneNumber
+      properties:
+        name:
+          type: string
+          example: "Your name"
+        surname:
+          type: string
+          example: "Your surname"
+        phoneNumber:
+          type: integer
+          example: 555
